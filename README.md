@@ -8,6 +8,7 @@ Scored work from [DataDriven](https://datadriven.io/u/open_dawn_6359), committed
 
 | Problem | Domain | Difficulty | Solved |
 |---|---|---|---|
+| [10 Lowest Uptime Services](./practice/sql/10-lowest-uptime-services) | SQL | Medium | 2026-10-28 |
 | [Bronze Medal](./practice/sql/bronze-medal) | SQL | Easy | 2026-10-27 |
 
 <!-- datadriven:index:end -->
