@@ -4,7 +4,6 @@ WITH svc_mins AS (
     min(uptime) AS min_uptime
   FROM svc_health
   GROUP BY svc_name
-  ORDER BY min_uptime
 ),
 svc_mins_ranked AS (
   SELECT
@@ -17,4 +16,5 @@ SELECT
   svc_name,
   min_uptime
 FROM svc_mins_ranked
-WHERE svc_rank <= 10;
+WHERE svc_rank <= 10
+ORDER BY min_uptime;
