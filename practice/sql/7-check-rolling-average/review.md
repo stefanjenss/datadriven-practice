@@ -18,6 +18,13 @@ DataDriven logged this as accepted on the first submission with no hints. You di
 - **What you missed:** the `ORDER BY` inside the window. You had `ORDER BY svc_name, checked` on the output and treated it as if it ordered the window. It doesn't: the output sort runs after the averages are computed. Without a window ordering, "the six rows before" has no defined meaning.
 - **Follow-up you answered wrong:** you said that dropping `ROWS BETWEEN` gives a whole-partition average in every row. That's what happens when there's no `ORDER BY`. With an `ORDER BY`, the default frame runs from the start of the partition to the current row, so you get a running average. Rows 1–7 still match the correct answer and row 8 onward goes wrong, which is why spot-checking the first few rows doesn't catch it. You needed the visualization to see this.
 
+**Redo on Oct 28 (three days early):** finished after looking up the frame syntax and getting two nudges from me.
+- **What you looked up:** "preceding to current in SQL."
+- **Syntax error:** you wrote `BETWEEN 6 PRECEDING ...` without `ROWS`. SQL read `checked BETWEEN 6` as a comparison and expected `AND`.
+- **What you missed:** `PARTITION BY`. You put `svc_name` in the window's `ORDER BY` instead, which sorts by service but lets each service's first six checks average in the previous service's rows. You saw it once you asked whose rows the frame should hold.
+- **What you fixed from last time:** the window `ORDER BY checked` and the final `ORDER BY` were both there.
+- **What it shows:** each attempt has dropped a different part of `OVER`. The first time it was `ORDER BY`; this time it was `PARTITION BY` and `ROWS`. Before writing any window function, name all three parts.
+
 ## On the redo
 
 Start from a blank editor without opening `solution.sql`.
@@ -40,3 +47,4 @@ Start from a blank editor without opening `solution.sql`.
 | Date | Rating | Next redo | Notes |
 |---|---|---|---|
 | 2026-10-28 | hard | 2026-10-31 | First solve. Missed the window ORDER BY; wrong on the default frame. |
+| 2026-10-28 | hard | 2026-10-31 | Redo. Missed PARTITION BY and the ROWS keyword; needed a syntax pointer and one nudge. |
