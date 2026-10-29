@@ -1,16 +1,18 @@
 # Review queue
 
-Built by `review.py` on 2026-10-28. Run `python3 review.py` to refresh it; don't edit it by hand.
+Built by `review.py` on 2026-10-29. Run `python3 review.py` to refresh it; don't edit it by hand.
 
-## Due now (0)
+## Due now (1)
 
-Nothing due.
+| Problem | Level | Last rating | Redo on |
+|---|---|---|---|
+| [The Window Cleaner](./practice/python/the-window-cleaner/review.md) | ? | again | 2026-10-29 |
 
 ## Coming up (4)
 
 | Problem | Level | Last rating | Redo on |
 |---|---|---|---|
-| [The Window Cleaner](./practice/python/the-window-cleaner/review.md) | ? | again | 2026-10-29 |
+| [Bargains and Budget-Busters](./practice/sql/bargains-and-budget-busters/review.md) | Hard | again | 2026-10-30 |
 | [10 Lowest Uptime Services](./practice/sql/10-lowest-uptime-services/review.md) | Medium | hard | 2026-10-31 |
 | [7-Check Rolling Average](./practice/sql/7-check-rolling-average/review.md) | Medium | hard | 2026-10-31 |
 | [Bronze Medal](./practice/sql/bronze-medal/review.md) | Easy | good | 2026-11-11 |
