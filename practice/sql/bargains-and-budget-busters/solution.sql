@@ -11,44 +11,21 @@ WITH single_stream AS (
       amount
     FROM cost_allocs
 ),
-stream_w_amount_ranking AS (
+cheapest_and_most_expensive AS (
   SELECT
     region,
-    svc_name,
-    amount,
-    ROW_NUMBER() OVER(PARTITION BY region ORDER BY amount ASC) AS ascending_rank,
-    ROW_NUMBER() OVER(PARTITION BY region ORDER BY amount DESC) AS descending_rank
-  FROM single_stream
-),
-most_expensive_by_region AS (
-  SELECT
-    region,
-    svc_name,
-    amount,
-    CASE
-      WHEN descending_rank = 1 THEN svc_name
-    END AS most_expensive
-  FROM stream_w_amount_ranking
-  WHERE descending_rank = 1
-),
-cheapest_by_region AS (
-  SELECT
-    region,
-    svc_name,
-    amount,
-    CASE
-      WHEN ascending_rank = 1 THEN svc_name
-    END AS cheapest
-  FROM stream_w_amount_ranking
-  WHERE ascending_rank = 1
+    FIRST_VALUE(svc_name) OVER (
+      PARTITION BY region ORDER BY amount DESC, svc_name ASC
+    ) AS most_expensive,
+    FIRST_VALUE(svc_name) OVER (
+      PARTITION BY region ORDER BY amount ASC, svc_name ASC
+    ) AS cheapest
+    FROM single_stream
   )
-  SELECT
-    e.region,
-    e.most_expensive,
-    c.cheapest
-  FROM most_expensive_by_region AS e
-  JOIN cheapest_by_region c ON e.region = c.region;
-  
+  SELECT DISTINCT
+    *
+  FROM cheapest_and_most_expensive;
+
 
 
 
