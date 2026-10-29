@@ -48,14 +48,18 @@ def write_front_matter(path, meta, body):
 
 
 def load_problems():
+    # A folder counts once DataDriven syncs its README.md, or once notes exist
+    # for a problem that hasn't synced yet.
+    folders = sorted({f.parent for pattern in ("*/*/README.md", "*/*/review.md")
+                      for f in PRACTICE.glob(pattern)})
     problems = []
-    for readme in sorted(PRACTICE.glob("*/*/README.md")):
-        folder = readme.parent
-        text = readme.read_text()
-        title = re.search(r"^# (.+)$", text, re.M)
-        level = re.search(r"\[\w+ · (\w+) · on DataDriven\]", text)
+    for folder in folders:
+        readme = folder / "README.md"
         review = folder / "review.md"
-        meta = read_front_matter(review)[0] if review.exists() else {}
+        text = readme.read_text() if readme.exists() else ""
+        meta, body = read_front_matter(review) if review.exists() else ({}, "")
+        title = re.search(r"^# (.+)$", text, re.M) or re.search(r"^# Review: (.+)$", body, re.M)
+        level = re.search(r"\[\w+ · (\w+) · on DataDriven\]", text)
         problems.append({
             "slug": folder.name,
             "domain": folder.parent.name.upper(),
@@ -119,7 +123,7 @@ def build_queue(problems, today):
         "",
         "## How the schedule works",
         "",
-        "Every review is a redo from a blank editor, without looking at `solution.sql`. Then rate it:",
+        "Every review is a redo from a blank editor, without looking at your old solution. Then rate it:",
         "",
         "| Rating | Meaning | Next gap |",
         "|---|---|---|",
@@ -146,7 +150,7 @@ def find(problems, query):
 NEW_NOTES = """
 # Review: {title}
 
-[Problem]({path_up}README.md) · [Accepted solution]({path_up}solution.sql)
+{links}
 
 ## How it went
 
@@ -165,7 +169,9 @@ def rate(problems, query, rating, note, today):
     if review.exists():
         meta, body = read_front_matter(review)
     else:
-        meta, body = {}, NEW_NOTES.format(title=p["title"], path_up="./")
+        solution = next(review.parent.glob("solution.*"), None)
+        links = "[Problem](./README.md)" + (f" · [Accepted solution](./{solution.name})" if solution else "")
+        meta, body = {}, NEW_NOTES.format(title=p["title"], links=links)
     step = int(meta.get("step", FIRST_STEP))
     step = 0 if MOVES[rating] is None else step + MOVES[rating]
     if step >= len(LADDER):

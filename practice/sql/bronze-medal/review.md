@@ -1,8 +1,8 @@
 ---
 rating: good
-step: 2
-last_reviewed: 2026-10-27
-next_review: 2026-11-03
+step: 3
+last_reviewed: 2026-10-28
+next_review: 2026-11-11
 ---
 
 # Review: Bronze Medal
@@ -23,3 +23,4 @@ No session notes: you solved this one before we started working through problems
 | Date | Rating | Next redo | Notes |
 |---|---|---|---|
 | 2026-10-27 | good | 2026-11-03 | First solve, from DataDriven's report (no session notes). |
+| 2026-10-28 | good | 2026-11-11 | Redo from blank, no help or reference (5 days early). |
