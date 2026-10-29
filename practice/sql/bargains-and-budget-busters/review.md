@@ -22,6 +22,7 @@ DataDriven logged this as accepted on the first submission with no hints, in 1 h
   - There's no final `ORDER BY`.
   - The `CASE` expressions are redundant, because the `WHERE` already keeps only rank-1 rows.
   - DataDriven rated the query 337% above optimal. Its big-O is already optimal (O(n log n)), so the gap is extra work: the ranked rows get read twice and joined back together.
+- **Rewritten later the same session:** you looked up `FIRST_VALUE` and needed a hint to use `SELECT DISTINCT`. Each window now puts one service name on every row, with `svc_name` breaking ties, and `DISTINCT` collapses the result to one row per region. That removes the second read and the join. The final `ORDER BY` is still missing.
 
 ## On the redo
 
@@ -31,6 +32,7 @@ Start from a blank editor without looking at `solution.sql`.
 - [ ] Build the stacked stream first, then run it alone and check that the row count is the two tables combined.
 - [ ] Break ties with `svc_name` in both windows, and end with an `ORDER BY`.
 - [ ] Get both service names onto every row in a single pass with `FIRST_VALUE`, then collapse to one row per region. That avoids the second read and the join.
+- [ ] Explain why `FIRST_VALUE` is safe with the default frame but `LAST_VALUE` isn't. This is the default-frame lesson from 7-Check Rolling Average.
 - [ ] Explain the single-line-item edge case: why a `CASE` label loses `most_expensive`, and why the join and `FIRST_VALUE` versions don't.
 
 **Likely interviewer follow-ups:**
