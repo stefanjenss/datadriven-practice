@@ -1,6 +1,6 @@
-# Stefan's data engineering practice
+# stefanjenss's data engineering practice
 
-Scored work from [DataDriven](https://datadriven.io/u/open_dawn_6359), committed here as it is scored. Each folder holds the work exactly as submitted and the report it earned.
+Scored work from [DataDriven](https://datadriven.io/u/stefanjenss), committed here as it is scored. Each folder holds the work exactly as submitted and the report it earned.
 
 <!-- datadriven:index:start -->
 
