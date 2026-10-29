@@ -4,7 +4,9 @@ WITH single_stream AS (
     svc_name,
     amount
   FROM cloud_costs
+  
   UNION ALL
+    
     SELECT
       region,
       svc_name,
@@ -15,10 +17,12 @@ cheapest_and_most_expensive AS (
   SELECT
     region,
     FIRST_VALUE(svc_name) OVER (
-      PARTITION BY region ORDER BY amount DESC, svc_name ASC
+      PARTITION BY region 
+      ORDER BY amount DESC, svc_name ASC
     ) AS most_expensive,
     FIRST_VALUE(svc_name) OVER (
-      PARTITION BY region ORDER BY amount ASC, svc_name ASC
+      PARTITION BY region 
+      ORDER BY amount ASC, svc_name ASC
     ) AS cheapest
     FROM single_stream
   )
