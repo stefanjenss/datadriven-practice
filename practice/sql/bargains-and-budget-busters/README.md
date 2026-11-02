@@ -2,7 +2,7 @@
 
 *Every region has both. Find them.*
 
-[SQL · Medium · on DataDriven](https://datadriven.io/problems/bargains_and_budget_busters)
+[SQL · Hard · on DataDriven](https://datadriven.io/problems/bargains_and_budget_busters)
 
 ## How it went
 
